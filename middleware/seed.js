@@ -4,8 +4,8 @@
 const seeder     = require('mongoose-seed');    //  NOTE: rejected "mongoose-seeder" because it seems to be out of sync with mongodb
 
 //  local modules
-const {data}     = require('./../data/data.js');
-const config     = require('../../config/config.js');
+const {data}     = require('../data/data.js');
+const config     = require('../config/config.js');
 
 /*==================================================
     build seeding Courses, Reviews, Users
@@ -18,9 +18,9 @@ function seedDB() {
     
         // Load Mongoose models
         seeder.loadModels([
-            'src/models/user.js',
-            'src/models/review.js',
-            'src/models/course.js'
+            'models/user.js',
+            'models/review.js',
+            'models/course.js'
         ]);
         
         // Clear specified collections

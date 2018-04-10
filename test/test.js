@@ -7,10 +7,10 @@ const expect       = require('expect');
 const request      = require('supertest');
 
 //  load local modules
-const seed         = require('../src/middleware/seed');
-const {Course}     = require('../src/models/course');
-const {Review}     = require('../src/models/review');
-const {User}       = require('../src/models/user');
+const seed         = require('../middleware/seed');
+const {Course}     = require('../models/course');
+const {Review}     = require('../models/review');
+const {User}       = require('../models/user');
 require('colors');
 
 const app          = express();

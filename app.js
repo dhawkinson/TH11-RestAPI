@@ -1,13 +1,18 @@
 'use strict';
 
+//  library modules
 const createError   = require('http-errors');
 const express       = require('express');
 const path          = require('path');
 const cookieParser  = require('cookie-parser');
+const bodyParser    = require('body-parser');
 const logger        = require('morgan');
 
+//  local modules
 const indexRouter   = require('./routes/index');
+const coursesRouter = require('./routes/courses');
 const usersRouter   = require('./routes/users');
+const seed          = require('./middleware/seed')
 
 const app           = express();
 
@@ -21,7 +26,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//  seed the database
+app.use(seed);
+
 app.use('/', indexRouter);
+//app.use('/courses', coursesRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

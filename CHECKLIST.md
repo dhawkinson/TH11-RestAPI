@@ -6,7 +6,7 @@
 To complete this project, follow the instructions below. If you get stuck, ask a question in the community.
 
 
-1. [ ] Set up a database connection.
+1. [X] Set up a database connection.
     * [X] Use npm to install Mongoose.
     * [X] Using Mongoose, create a connection to your MongoDB database.
     * [X] Write a message to the console if there's an error connecting to the database.
