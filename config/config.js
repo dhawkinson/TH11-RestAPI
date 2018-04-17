@@ -5,6 +5,7 @@
         PORT
         MONGODB_URI
         JWT_SECRET
+        AUTHORIZATION
     from config.json
 ==================================================*/
 const env = process.env.NODE_ENV || 'development';

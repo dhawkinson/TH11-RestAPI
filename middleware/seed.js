@@ -1,19 +1,19 @@
 'use strict';
 
 //  library modules
-const seeder     = require('mongoose-seed');    //  NOTE: rejected "mongoose-seeder" because it seems to be out of sync with mongodb
+const seeder = require('mongoose-seed');    //  NOTE: rejected "mongoose-seeder" because it seems to be out of sync with mongodb
+const util   = require('util');
 
 //  local modules
-const {data}     = require('../data/data.js');
-const config     = require('../config/config.js');
+const {data} = require('../data/data.js');
+const config = require('../config/config.js');
 
 /*==================================================
     build seeding Courses, Reviews, Users
 ==================================================*/
 
-// declare seeding
-function seedDB() {
-    seeder.connect(process.env.MONGODB_URI, () => {
+const seedDB = (req, res, next) => {
+    seeder.connect(process.env.MONGODB_URI, (err, db) => {
         console.log(`Connected to: ${process.env.MONGODB_URI} and seeding files`);
     
         // Load Mongoose models
@@ -30,8 +30,13 @@ function seedDB() {
                 seeder.disconnect();
             });
         });
+        if (err) {
+            err = new Error('Seeding failed');
+            err.status = 500;
+            return next(err);
+        }
     });
-}
+};
 
 //  execute seeding
 seedDB();
@@ -40,4 +45,5 @@ const seed = (req, res, next) => {
     seedDB(next());
 };
 
-module.exports = seed;
+
+module.exports = {seed};

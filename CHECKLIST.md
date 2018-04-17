@@ -1,10 +1,10 @@
 # fsjsProject11
+
 ## Build REST API with Express
 
 ## Project Instructions
 
 To complete this project, follow the instructions below. If you get stuck, ask a question in the community.
-
 
 1. [X] Set up a database connection.
     * [X] Use npm to install Mongoose.
@@ -35,11 +35,11 @@ To complete this project, follow the instructions below. If you get stuck, ask a
         * [X] rating (Number, required, must fall between “1” and “5”)
         * [X] review (String)
 
-Mongoose validation gives you a rich set of tools to validate user data. See http://mongoosejs.com/docs/validation.html for more information.
+    Mongoose validation gives you a rich set of tools to validate user data. See "http://www.mongoosejs.com/docs/validation.html" for more information.
 
 3. [X] Seed your database with data.
     * We've provided you with seed data in JSON format (see the src/data/data.json file) to work with the mongoose-seeder npm package.
-    * See https://github.com/SamVerschueren/mongoose-seeder for documentation on how to use mongoose-seeder.
+    * See "https://www.github.com/SamVerschueren/mongoose-seeder" for documentation on how to use mongoose-seeder.
     * Important: mongoose-seeder requires an open connection to the database to be available, so be sure to not call your database seed code until Mongoose has successfully opened a connection to the database.
 
 4. [X] Create the user routes
@@ -63,7 +63,7 @@ Mongoose validation gives you a rich set of tools to validate user data. See htt
 7. [X] Update the User model to store the user's password as a hashed value.
         * For security reasons, we don't want to store the password property in the database as clear text.
         * Create a pre save hook on the user schema that uses the bcrypt npm package to hash the user's password.
-        * See https://github.com/ncb000gt/node.bcrypt.js/ for more information.
+        * See "https://www.github.com/ncb000gt/node.bcrypt.js/" for more information.
 
 8. [X] Create an authentication method on the user model to return the user document based on their credentials
         * Create a static method on the user schema that takes an email, password, and callback
@@ -72,7 +72,7 @@ Mongoose validation gives you a rich set of tools to validate user data. See htt
         * If they match, then return the user document that matched the email address
         * If they don't match or a user with the email given isn’t found, then pass an error object to the callback
 
-9.  [X] Set up permissions to require users to be signed in
+9. [X] Set up permissions to require users to be signed in
         * Postman will set an Authorization header with each request when a user is signed in.
         * Add a middleware function that attempts to get the user credentials from Authorization header set on the request.
         * You can use the basic-auth npm package to parse the `Authorization' header into the user's credentials.
@@ -89,12 +89,11 @@ Mongoose validation gives you a rich set of tools to validate user data. See htt
 
 To get an "exceeds" rating, you can expand on the project in the following ways:
 
-
 1. [ ] Review model
         * Validation added to prevent a user from reviewing their own course
 2. [ ] User routes
         * Tests have been written for the following user stories:
-            * When I make a request to the GET /api/users route with the correct credentials, the corresponding user document is returned
+            * When I make a request to the GET /api/users route with the correct credentials, the corresponding user document is returned (200)
             * When I make a request to the GET /api/users route with the invalid credentials, a 401 status error is returned
 3. [ ] Course routes
         * When returning a single course for the GET /api/courses/:courseId route, use Mongoose deep population to return only the fullName of the related user on the course model and each review returned with the course model.

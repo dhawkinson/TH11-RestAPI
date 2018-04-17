@@ -2,3 +2,4 @@
 node_modules/
 CHECKLIST.node_modules
 .jshintrc
+.playground/

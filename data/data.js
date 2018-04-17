@@ -6,37 +6,19 @@ const data = [
                 "_id": "57029ed4795118be119cc437",
                 "fullName": "Joe Smith",
                 "emailAddress": "joe@smith.com",
-                "password": "password",
-                "tokens": [
-                    {
-                        "access": "auth",
-                        "token": "potmtifwe354myt104daew64"
-                    }
-                ]
+                "password": "password"
             },
             {
                 "_id": "57029ed4795118be119cc438",
                 "fullName": "Sam Jones",
                 "emailAddress": "sam@jones.com",
-                "password": "password",
-                "tokens": [
-                    {
-                        "access": "auth",
-                        "token": "potmtifwe354myt104daew64"
-                    }
-                ]
+                "password": "password"
             },
             {
                 "_id": "57029ed4795118be119cc439",
                 "fullName": "Sam Smith",
                 "emailAddress": "sam@smith.com",
-                "password": "password",
-                "tokens": [
-                    {
-                        "access": "auth",
-                        "token": "potmtifwe354myt104daew64"
-                    }
-                ]
+                "password": "password"
             }
         ]
     },

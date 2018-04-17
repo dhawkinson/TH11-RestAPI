@@ -2,11 +2,13 @@
     "development": {
         "PORT": 5000,
         "MONGODB_URI": "mongodb://localhost:27017/CourseRateAPI",
-        "JWT_SECRET": "potmtifwe354myt104daew64"
+        "JWT_SECRET": "potmTIFwe354myt104daew64",
+        "AUTHORIZATION": "Basic am9lQHNtaXRoLmNvbTpwYXNzd29yZA=="
     },
     "test": {
-        "PORT": 5001,
+        "PORT": 5000,
         "MONGODB_URI": "mongodb://localhost:27017/CourseRateAPITest",
-        "JWT_SECRET": "potmtifwe354myt104daew64"
+        "JWT_SECRET": "asdfTRPidnvoksm39jd01sos",
+        "AUTHORIZATION": "Basic am9lQHNtaXRoLmNvbTpwYXNzd29yZA=="
     }
 }

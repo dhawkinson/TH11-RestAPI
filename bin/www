@@ -4,9 +4,13 @@
  * Module dependencies.
  */
 
-const app   = require('../app');
-const debug = require('debug')('myapp:server');
-const http  = require('http');
+ // library modules
+const debug  = require('debug')('myapp:server');
+const http   = require('http');
+
+//  locaal modules
+const app    = require('../app');
+const {seed} = require('../middleware/seed');
 
 /**
  * Get port from environment and store in Express.

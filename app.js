@@ -9,10 +9,11 @@ const bodyParser    = require('body-parser');
 const logger        = require('morgan');
 
 //  local modules
-const indexRouter   = require('./routes/index');
-const coursesRouter = require('./routes/courses');
-const usersRouter   = require('./routes/users');
-const seed          = require('./middleware/seed')
+const index         = require('./routes/index');
+const courses       = require('./routes/courses');
+const users         = require('./routes/users');
+const config        = require('./config/config');
+const {seed}        = require('./middleware/seed');
 
 const app           = express();
 
@@ -26,12 +27,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//  seed the database
-app.use(seed);
-
-app.use('/', indexRouter);
-//app.use('/courses', coursesRouter);
-app.use('/users', usersRouter);
+app.use('/', index);
+//app.use('/api/courses', courses);
+app.use('/api/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
