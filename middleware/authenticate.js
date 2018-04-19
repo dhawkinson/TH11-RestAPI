@@ -10,18 +10,18 @@ const authenticate = (req, res, next) => {
     const credentials = auth(req);
 
     if ( credentials ) {
-        User.findByCredentials(credentials.email, credentials.pass, (err, user) => {
+        User.authenticate(credentials.name, credentials.pass, (err, user) => {
             if ( err || !user ) {
-                const err = new Error('User not found with those credentials');
-                err.status = 404;
+                let err = new Error('No credentialed user found');
+                err.status = 401;
                 return next(err);
             } else {
                 req.authenticatedUser = user;
-                next();
+                return next();
             }
         });
     } else {
-        err = new Error('You are not authorized, you must sign in');
+        let err = new Error('Unauthorized, you must sign in');
         err.status = 401;
         return next(err);
     }

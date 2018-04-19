@@ -27,7 +27,7 @@ const seedDB = (req, res, next) => {
         seeder.clearModels(['User', 'Review', 'Course'], function() {
             // Callback to populate DB once collections have been cleared
             seeder.populateModels(data, function() {
-                seeder.disconnect();
+                //seeder.disconnect();  //  do we really want to disconnect? We will just have to reconnect.
             });
         });
         if (err) {

@@ -38,25 +38,24 @@ const UserSchema = new mongoose.Schema({
     model methods (UserSchema.statics)
 ========================================*/
 
-UserSchema.statics.findByCredentials = function(email, password) {
-    //  look for a user with the email specified in the request
-    let User = this;
-    return User.findOne({email}).then((user) => {
-        if ( !user ) {
-            return Promise.reject();
+UserSchema.statics.authenticate = (email, password, callback) => {
+    User.findOne({ emailAddress: email }, (err, user) => {
+        if (err) {
+            return callback(err);
+        } else if (!user) {
+            let err = new Error('User with that email not found');
+            err.status = 404;
+            return callback(err);
         }
-
-        return new Promise((resolve, reject) => {
-            //  user found -- validate password
-            //  password = entered password
-            //  user.password = hashed password
-            bcrypt.compare(password, user.password, (err, res) => {
-                if ( res ) {
-                    resolve(user);
-                } else {
-                    reject();
-                }
-            });
+        // validate password (password = entered password, user.password = hashed password)
+        bcrypt.compare(password, user.password, (err, res) => {
+            if (res === true) {
+                return callback(null, user);
+            } else {
+                let err = new Error('User password not validated');
+                err.status = 401;
+                return callback(err);
+            }
         });
     });
 };

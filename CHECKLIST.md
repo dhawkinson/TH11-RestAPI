@@ -91,7 +91,7 @@ To get an "exceeds" rating, you can expand on the project in the following ways:
 
 1. [ ] Review model
         * Validation added to prevent a user from reviewing their own course
-2. [ ] User routes
+2. [X] User routes
         * Tests have been written for the following user stories:
             * When I make a request to the GET /api/users route with the correct credentials, the corresponding user document is returned (200)
             * When I make a request to the GET /api/users route with the invalid credentials, a 401 status error is returned

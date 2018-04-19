@@ -13,35 +13,35 @@ const {authenticate} = require('../middleware/authenticate');
 ==================================================*/
 //   POST /api/users 201 - Creates a user, sets the Location header to "/", and returns no content
 router.post('/', (req, res, next) => {
-    User.findOne({emailAddress:req.body.emailAddress}, (err, user) => {
-
-        if ( err ) throw err;
-
-        if( !user ){
-            User.create(req.body, function (err, user) {
-                if(!user.emailAddress || !user.fullName || !user.password){
-                    err.status = 400;
-                    return next(err);
-                }
-                if (err){
-                    return next(err);
-                } else{
-                    res.location('/');
-                    res.status(201).json();
-                }
-
-            });
-        } else {
-            err = new Error('That email already exists');
+    User.create(req.body, (err, user) => {
+        //  catches items with missing data
+        if (!user.fullName || !user.emailAddress || !user.password) {
             err.status = 400;
             return next(err);
         }
+        //  catches all other errors
+        if (err) {
+            if (err.name === "Mongo Error" && err.code === 11000) {
+                err = new Error('That email is taken, you must use a different valid email address');
+                err.status = 400;
+                return next(err);
+            } else {
+                return next(err);
+            }
+        }
+        //  the happy path
+        res.location('/');
+        res.status(201).json();
     });
 });
 //  GET / 200 - Returns the currently authenticated user
-router.get('/api/users', authenticate, (req, res) => {
-    res.json(req.authenticatedUser);
-    //res.status(200);
+router.get('/', authenticate, (req, res) => {
+    if (res) {
+        res.json(req.authenticatedUser);
+        res.status(200);
+    } else {
+        
+    }
 });
 
 module.exports = router;
