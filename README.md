@@ -1,11 +1,13 @@
-# fsjsProject11
-## Build REST API with Express
+# TH11-RestAPI
+Full Stack Java Script Project 11 - Treehouse TechDegree
 
-## Project Description
+Build REST API using Node, Express and mongoDB and Postman
 
-In this project, you’ll create a REST API using Express. The API will provide a way for users to review educational courses: users can see a list of courses in a database; add courses to the database; and add reviews for a specific course.
+Create a REST API using Express. The API will provide a way for users to review educational courses: users can see a list of courses in a database; add courses to the database; and add reviews for a specific course.
 
 To complete this project, you’ll use your knowledge of REST API design, Node.js, and Express to create API routes, along with Mongoose and MongoDB for data modeling, validation, and persistence.
+
+Confirmation of all routes will be performed using Postman.
 
 The project entails the following steps:
 
@@ -31,5 +33,4 @@ To get an "exceeds" rating, you can expand on the project in the following ways:
         * When I make a request to the GET /api/users route with the correct credentials, the corresponding user document is returned
         * When I make a request to the GET /api/users route with the invalid credentials, a 401 status error is returned
 3. Course routes
-    * When returning a single course for the GET /api/courses/:courseId route, use Mongoose deep population to return only the fullName of the related user on the course model and each review returned with the course model. Example user object returned:
-         { "_id": "wiubfh3eiu23rh89hcwib", "fullName": "Sam Smith" }
+    * When returning a single course for the GET /api/courses/:courseId route, use Mongoose deep population to return only the fullName of the related user on the course model and each review returned with the course model.
