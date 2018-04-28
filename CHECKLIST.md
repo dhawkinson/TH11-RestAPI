@@ -49,12 +49,12 @@ To complete this project, follow the instructions below. If you get stuck, ask a
 
 5. [ ] Create the course routes
     * [ ] Set up the following routes (listed in the format HTTP VERB Route HTTP Status Code):
-        * [ ] GET /api/courses 200 - Returns the Course "_id" and "title" properties
-        * [ ] GET /api/course/:courseId 200 - Returns all Course properties and related documents for the provided course ID
+        * [X] GET /api/courses 200 - Returns the Course "_id" and "title" properties
+        * [X] GET /api/course/:courseId 200 - Returns all Course properties and related documents for the provided course ID
                 When returning a single course for the GET /api/courses/:courseId route, use Mongoose population to load the related user and reviews documents.
-        * [ ] POST /api/courses 201 - Creates a course, sets the Location header, and returns no content
-        * [ ] PUT /api/courses/:courseId 204 - Updates a course and returns no content
-        * [ ] POST /api/courses/:courseId/reviews 201 - Creates a review for the specified course ID, sets the Location header to the related course, and returns           no content
+        * [X] POST /api/courses 201 - Creates a course, sets the Location header, and returns no content
+        * [X] PUT /api/courses/:courseId 204 - Updates a course and returns no content
+        * [ ] POST /api/courses/:courseId/reviews 201 - Creates a review for the specified course ID, sets the Location header to the related course and returns no content
 
 6. [ ] Update any POST and PUT routes to return Mongoose validation errors.
         * Use the next function in each route to pass any Mongoose validation errors to Express’s global error handler
@@ -89,12 +89,12 @@ To complete this project, follow the instructions below. If you get stuck, ask a
 
 To get an "exceeds" rating, you can expand on the project in the following ways:
 
-1. [ ] Review model
+1. [X] Review model
         * Validation added to prevent a user from reviewing their own course
 2. [X] User routes
         * Tests have been written for the following user stories:
             * When I make a request to the GET /api/users route with the correct credentials, the corresponding user document is returned (200)
             * When I make a request to the GET /api/users route with the invalid credentials, a 401 status error is returned
-3. [ ] Course routes
+3. [X] Course routes
         * When returning a single course for the GET /api/courses/:courseId route, use Mongoose deep population to return only the fullName of the related user on the course model and each review returned with the course model.
-        * Example user object returned: { "_id": "wiubfh3eiu23rh89hcwib", "fullName": "Sam Smith" }* See the Project Resources section for more information about   deep population.
+        * Example user object returned: { "_id": "wiubfh3eiu23rh89hcwib", "fullName": "Sam Smith" }* See the Project Resources section for more information about deep population.

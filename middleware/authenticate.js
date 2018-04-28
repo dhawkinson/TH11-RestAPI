@@ -9,10 +9,11 @@ const authenticate = (req, res, next) => {
     //  otherwise an object with name and pass properties.  (succeed)
     const credentials = auth(req);
 
-    if ( credentials ) {
+    if (credentials) {
         User.authenticate(credentials.name, credentials.pass, (err, user) => {
             if ( err || !user ) {
-                let err = new Error('No credentialed user found');
+                let err = new Error();
+                err.message = 'No credentialed user found';
                 err.status = 401;
                 return next(err);
             } else {
@@ -21,7 +22,8 @@ const authenticate = (req, res, next) => {
             }
         });
     } else {
-        let err = new Error('Unauthorized, you must sign in');
+        let err = new Error();
+        err.message = 'Unauthorized, you must sign in';
         err.status = 401;
         return next(err);
     }

@@ -4,7 +4,6 @@
     "private": true,
     "scripts": {
         "start": "nodemon ./bin/www",
-        "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha test/test.js",
         "test-watch": "nodemon --exec 'npm test'"
     },
     "dependencies": {
@@ -24,6 +23,7 @@
         "mongoose-seed": "^0.4.1",
         "morgan": "~1.9.0",
         "npm": "^5.8.0",
+        "path": "^0.12.7",
         "pug": "^2.0.3",
         "util": "^0.10.3",
         "validator": "^9.4.1"

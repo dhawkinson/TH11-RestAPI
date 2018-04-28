@@ -2,9 +2,11 @@
 
 const mongoose = require('mongoose');
 
-const Course   = mongoose.model('Course', {
+const CourseSchema = new mongoose.Schema({
+    //  sets user to an ObjectId that references the User model (user)
+    //  ref: ...docs/api.html#schema_Schema.Types
     user: {
-        type: mongoose.Schema.Types.ObjectId,   // ref: ...docs/api.html#schema_Schema.Types
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     title: {
@@ -28,12 +30,13 @@ const Course   = mongoose.model('Course', {
             required: [true, 'Step Description required!']
             }
     }],
+    //  sets reviews to an array of ObjectIds that reference the Review model (review)
     reviews: [{
-        //  sets reviews to an array of ObjectIds that reference the Review model (reviews)
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
     }]
 });
 
+const Course = mongoose.model('Course', CourseSchema);
 
-module.exports = {Course};
+module.exports = { Course };

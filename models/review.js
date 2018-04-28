@@ -2,9 +2,11 @@
 
 const mongoose = require('mongoose');
 
-const Review   = mongoose.model('Review', {
+const Review = mongoose.model('Review', {
+    //  sets user to an ObjectId that references the User model (user)
+    //  ref: http://mongoosejs.com/docs/schematypes.html
     user: {
-        type: mongoose.Schema.Types.ObjectId,   // ref: ...docs/api.html#schema_Schema.Types
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     postedOn: {

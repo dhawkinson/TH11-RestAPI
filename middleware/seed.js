@@ -31,7 +31,8 @@ const seedDB = (req, res, next) => {
             });
         });
         if (err) {
-            err = new Error('Seeding failed');
+            err = new Error();
+            err.message = 'Seeding failed';
             err.status = 500;
             return next(err);
         }

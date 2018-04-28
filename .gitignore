@@ -1,5 +1,5 @@
-.vscode
+.vscode/
 node_modules/
-CHECKLIST.node_modules
+CHECKLIST.md
 .jshintrc
 .playground/

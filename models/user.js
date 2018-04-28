@@ -4,7 +4,7 @@ const mongoose  = require('mongoose');
 const validator = require('validator');
 const jwt       = require('jsonwebtoken');
 const _         = require('lodash');
-const bcrypt    = require('bcryptjs');      //  Used bcryptjs rather than bcrypt. Reported to have less problems accross browsers (per Andrew Mead)
+const bcrypt    = require('bcryptjs');      //  Used bcryptjs rather than bcrypt. Reported to have less problems across browsers (per Andrew Mead)
 
 //  define the User model
 const UserSchema = new mongoose.Schema({
@@ -43,7 +43,8 @@ UserSchema.statics.authenticate = (email, password, callback) => {
         if (err) {
             return callback(err);
         } else if (!user) {
-            let err = new Error('User with that email not found');
+            let err = new Error();
+            err.message = 'User with that email not found';
             err.status = 404;
             return callback(err);
         }
@@ -52,7 +53,8 @@ UserSchema.statics.authenticate = (email, password, callback) => {
             if (res === true) {
                 return callback(null, user);
             } else {
-                let err = new Error('User password not validated');
+                let err = new Error();
+                err.message = 'User password not validated';
                 err.status = 401;
                 return callback(err);
             }

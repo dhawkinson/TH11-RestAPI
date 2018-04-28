@@ -1,11 +1,12 @@
 'use strict';
 
 //  load library modules
-const express = require('express');
-const expect = require('chai').expect;
-const request = require('supertest');
-const colors = require('colors');
-const seeder = require('mongoose-seed');    //  NOTE: rejected "mongoose-seeder" because it seems to be out of sync with mongodb
+const express  = require('express');
+const expect   = require('chai').expect;
+const request  = require('supertest');
+const colors   = require('colors');
+const seeder   = require('mongoose-seed');    //  NOTE: rejected "mongoose-seeder" because it seems to be out of sync with mongodb
+const mongoose = require('mongoose');
 
 require('colors');
 
@@ -16,7 +17,7 @@ const {User}   = require('../models/user');
 const {data}   = require('../data/data.js');
 const config   = require('../config/config.js');
 
-const app        = express;
+const app = express;
 
 describe('[===SEED the Database===]'.green, () => {
 
@@ -42,7 +43,8 @@ describe('[===SEED the Database===]'.green, () => {
                 });
             });
             if (err) {
-                err = new Error('Seeding failed');
+                err = new Error();
+                err.message = 'Seeding failed';
                 err.status = 500;
                 return next(err);
             }
@@ -73,7 +75,8 @@ describe('[===SEED the Database===]'.green, () => {
                             //  catches all other errors
                             if (err) {
                                 if (err.name === "Mongo Error" && err.code === 11000) {
-                                    err = new Error('That email is taken, you must use a different valid email address');
+                                    err = new Error();
+                                    err.message = 'That email is taken, you must use a different valid email address';
                                     err.status = 400;
                                     return next(err);
                                 } else {
