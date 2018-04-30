@@ -31,10 +31,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 /*========================================
-    NOTE TO SELF: instance methods (UserSchema.methods) - none used (see 07node-todo-api for reference)
-========================================*/
-
-/*========================================
     model methods (UserSchema.statics)
 ========================================*/
 
