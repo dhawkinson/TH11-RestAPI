@@ -32,9 +32,7 @@ router.get('/', (req, res, next) => {
 });
 //  GET /api/course/:courseId 200 - Returns all Course properties and related documents for the provided course ID
 router.get('/:courseID', (req, res, next) => {
-    //  find course by Id ({}), bring back course_id & title ('course_id title')
-    //  see (http://mongoosejs.com/docs/queries.html)
-    //  and (http://mongoosejs.com/docs/populate.html)
+
     Course
         .findById(req.params.courseID)
         .populate({ path: 'user', select: 'fullName' })
@@ -63,13 +61,12 @@ router.post('/', authenticate, function(req, res, next) {
     });
 });
 //  PUT /api/courses/:courseId 204 - Updates a course and returns no content
-router.put('/:courseId', authenticate, function(req, res, next) {
-    Course.findByIdAndUpdate(req.body._id, req.body, function(err) {
+router.put('/:courseID', authenticate, function(req, res, next) {
+    Course.findByIdAndUpdate(req.params.courseID, req.body, function(err) {
         if (err) {
             err.status = 400;      //  Bad Request
             return next(err);
         }
-        console.log('Update Courses: ',req.body);
         res.body = req.body;
         res.status(204).json();    //   No Content
     });
@@ -77,71 +74,38 @@ router.put('/:courseId', authenticate, function(req, res, next) {
 //  POST /api/courses/:courseId/reviews 201
 //  Creates a review for the specified course ID, 
 //  sets the Location header to the related course, and returns no content
-/*==================================================
-    not Working yet
-==================================================*/
-
-router.post('/:courseId/reviews', authenticate, (req, res, next) => {
-    if (req.auth) {
-        const reviewData = {
-            user: req.user._id,
-            rating: req.body.rating,
-            review: req.body.review
-        };
-        Review.create(reviewData, (err, review) => {
-            if (err) {
-                return next(err);
-            } else {
-                Course.findByIdAndUpdate(req.params.courseId, {$push: {reviews: review._id}}, (err, course) => {
-                    if (err) {
-                        return next(err);
-                    } else {
-                        res.status(201)
-                            .location("/api/courses/" + req.body._id)
-                            .end();
-                    }
-                });
-            }
-        });
-    } else {
-        let err = new Error();
-        err.message = 'You may not review your own course';
-        err.status = 401;   //  Unauthorized
-        return next(err);
+router.post('/:courseID/reviews', authenticate, (req, res, next) => {
+    //  reject an unauthenticated user
+    if ( !req.authenticatedUser ) {
+        const err = new Error();
+        err.message = 'You are not an Authorized user';
+        err.status = 401;
+        return next(err)
     }
-
-});
-/*router.=>post('/:courseID/reviews', authenticate, (req, res, next) => {
-    //  first, exclude self reviews
-    console.log('Authenticated user:', req.authenticatedUser._id.toString(), 'Response User:', res.user._id.toString());
-    if (req.authenticatedUser._id.toString() === res.user._id.toString()) {
-        let err = new Error();
-        err.message = 'You may not review your own course';
-        err.status = 401;   //  Unauthorized
-        return next(err);
-    }
-    //  second, create the Review document
-    const reviewData = {
-        user: req.user._id,
-        rating: req.body.rating,
-        review: req.body.review
-    };
-    Review.create(reviewData, (err, review) => {
+    //  create the review -- must perform first because review._id is required to update course
+    Review.create(req.body, (err, review) => {
         if (err) {
+            err.status = 400;
             return next(err);
-        } else {
-            //  third, push the review on to the course
-            //  see (http://mongoosejs.com/docs/subdocs.html)
-            Course.findByIdAndUpdate(req.params.courseId, { $push: { reviews: review._id } }, (err, course) => {
+        }
+        //  update the review to the course
+        Course.findByIdAndUpdate(req.params.courseID, { $push: { reviews: review._id } })
+            .populate('user')
+            .exec(function (err, course) {
                 if (err) {
                     return next(err);
-                } else {
-                    res.location('/:courseID');
-                    res.status(201).json();
+                }
+                //  test course for self review and do not allow
+                if (req.authenticatedUser._id.toString() === course.user._id.toString()) {
+                    let err = new Error();
+                    err.message = "You are not authorized to review your own course";
+                    err.status = 401;
+                    return next(err);
                 }
             });
-        }
+            res.location('/:courseID');
+            res.status(201).json();
     });
-});*/
+});
 
 module.exports = router;

@@ -47,16 +47,16 @@ To complete this project, follow the instructions below. If you get stuck, ask a
         * [X] GET /api/users 200 - Returns the currently authenticated user
         * [X] POST /api/users 201 - Creates a user, sets the Location header to "/", and returns no content
 
-5. [ ] Create the course routes
-    * [ ] Set up the following routes (listed in the format HTTP VERB Route HTTP Status Code):
+5. [X] Create the course routes
+    * Set up the following routes (listed in the format HTTP VERB Route HTTP Status Code):
         * [X] GET /api/courses 200 - Returns the Course "_id" and "title" properties
         * [X] GET /api/course/:courseId 200 - Returns all Course properties and related documents for the provided course ID
                 When returning a single course for the GET /api/courses/:courseId route, use Mongoose population to load the related user and reviews documents.
         * [X] POST /api/courses 201 - Creates a course, sets the Location header, and returns no content
         * [X] PUT /api/courses/:courseId 204 - Updates a course and returns no content
-        * [ ] POST /api/courses/:courseId/reviews 201 - Creates a review for the specified course ID, sets the Location header to the related course and returns no content
+        * [X] POST /api/courses/:courseId/reviews 201 - Creates a review for the specified course ID, sets the Location header to the related course and returns no content
 
-6. [ ] Update any POST and PUT routes to return Mongoose validation errors.
+6. [X] Update any POST and PUT routes to return Mongoose validation errors.
         * Use the next function in each route to pass any Mongoose validation errors to Express’s global error handler
         * Send the Mongoose validation error with a400 status code to the user
 
