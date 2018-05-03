@@ -14,33 +14,29 @@ const {authenticate} = require('../middleware/authenticate');
 ==================================================*/
 //   POST /api/users 201 - Creates a user, sets the Location header to "/", and returns no content
 router.post('/', (req, res, next) => {
-    //  see (http://mongoosejs.com/docs/models.html)
-    User.create(req.body, (err, user) => {
-        // catches incomplete records
-        if (!req.body.fullName ||
-            !req.body.emailAddress ||
-            !req.body.password ||
-            !req.body.confirmPassword) {
-            const err = new Error();
-            err.message = 'All Fields are Required';
-            err.status = 400;
-            return next(err);
-        }
-        //  catches all other errors
-        if (err) {
-            if (err.name === "Mongo Error" && err.code === 11000) {
+    User.findOne({ emailAddress: req.body.emailAddress })
+        .exec((err, user) => {
+            if (user) {
                 err = new Error();
-                err.message
-                err.status = 400;   //  Bad Request
+                err.message = 'That email is already in use';
+                err.status = 400;
                 return next(err);
             } else {
-                return next(err);
+                User.create(req.body, function (err, user) {
+                    if (!user.emailAddress || !user.fullName || !user.password) {
+                        err.status = 400;
+                        return next(err);
+                    }
+                    if (err) {
+                        return next(err);
+                    } else {
+                        res.location('/');
+                        res.status(201).json();
+                    }
+
+                });
             }
-        }
-        //  the happy path
-        res.location('/');
-        res.status(201).json(); //  Created
-    });
+        });
 });
 //  GET / 200 - Returns the currently authenticated user
 router.get('/', authenticate, (req, res) => {
@@ -48,14 +44,16 @@ router.get('/', authenticate, (req, res) => {
     //  see (http://mongoosejs.com/docs/queries.html)
     //  NOTE: I'm not bringing back the password for security reasons, even though it is hashed
     //      if you feel the need to verify that the password is there, change the string to 'user_id fullName emailAddress password'/save and rerun
-    User.findOne({}, 'user_id fullName emailAddress', (err, users) => {
+    /*User.findOne({ emailAddress: req.authenticatedUser }, 'user_id fullName emailAddress', (err, users) => {
         if (err) {
             err.status = 400;   //  Bad Request
             return next(err);
         }
         res.status = 200;       //  OK
         res.json(users);
-    });
+    });*/
+    res.json(req.authenticatedUser);
+    res.status(200);
 
 });
 
