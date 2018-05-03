@@ -16,9 +16,14 @@ const {authenticate} = require('../middleware/authenticate');
 router.post('/', (req, res, next) => {
     //  see (http://mongoosejs.com/docs/models.html)
     User.create(req.body, (err, user) => {
-        //  catches items with missing data
-        if (!user.fullName || !user.emailAddress || !user.password) {
-            err.status = 400;   //  Bad Request
+        // catches incomplete records
+        if (!req.body.fullName ||
+            !req.body.emailAddress ||
+            !req.body.password ||
+            !req.body.confirmPassword) {
+            const err = new Error();
+            err.message = 'All Fields are Required';
+            err.status = 400;
             return next(err);
         }
         //  catches all other errors
@@ -51,6 +56,7 @@ router.get('/', authenticate, (req, res) => {
         res.status = 200;       //  OK
         res.json(users);
     });
+
 });
 
 module.exports = router;
